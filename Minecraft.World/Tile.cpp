@@ -505,6 +505,10 @@ void Tile::staticCtor()
 
 	Stats::buildItemStats();
 
+	// Replace sponge texture with an individual PNG
+	ResourceLocation* spongeTexture = new ResourceLocation(L"res/TitleUpdate/res/textures/blocks/sponge.png");
+	Tile::sponge->setResourceLocation(spongeTexture);
+
 	// */
 }
 
