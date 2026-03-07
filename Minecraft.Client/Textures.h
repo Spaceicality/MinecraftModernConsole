@@ -281,6 +281,11 @@ public:
 	void bindTexture(ResourceLocation *resource); // 4J Added
 	void bindTextureLayers(ResourceLocation *resource);	// 4J added
 
+	// Added for individual texture files support
+	void bindTexture(ResourceLocation *resource, bool individual);
+	bool isIndividualTexture(ResourceLocation *resource);
+	wstring getTexturePath(ResourceLocation *resource);
+
 	// 4J Made public for use in XUI controls
 	void bind(int id);
 
