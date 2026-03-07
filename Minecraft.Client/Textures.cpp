@@ -410,14 +410,46 @@ void Textures::bindTexture(const wstring &resourceName)
 // 4J Added
 void Textures::bindTexture(ResourceLocation *resource)
 {
-	if(resource->isPreloaded())
-	{
-		bind(loadTexture(resource->getTexture()));
-	}
-	else
-	{
-		bind(loadTexture(TN_COUNT, resource->getPath()));
-	}
+    if(resource->isPreloaded())
+    {
+        // Preloaded textures from atlas
+        bind(loadTexture(resource->getTexture()));
+    }
+    else
+    {
+        // Direct texture from folder (e.g., "textures/blocks/stone.png")
+        wstring path = resource->getPath();
+        if(path.size() > 0)
+        {
+            // Append .png if not present
+            if(path.substr(path.length() - 4) != L".png")
+                path += L".png";
+
+            int id = -1;
+            bool inMap = (idMap.find(path) != idMap.end());
+            if(inMap)
+                id = idMap[path];
+            else
+            {
+                BufferedImage *img = readImage((_TEXTURE_NAME)-1, path);
+                if(img)
+                {
+                    id = getTexture(img, C4JRender::TEXTURE_FORMAT_RxGyBzAw, true);
+                    delete img;
+                }
+                else
+                {
+                    id = 0; // fallback
+                }
+                idMap[path] = id;
+            }
+            bind(id);
+        }
+        else
+        {
+            bind(0); // fallback
+        }
+    }
 }
 
 void Textures::bindTextureLayers(ResourceLocation *resource)
