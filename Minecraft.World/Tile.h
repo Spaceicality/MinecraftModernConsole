@@ -3,6 +3,7 @@
 #include "Vec3.h"
 #include "Definitions.h"
 #include "SoundTypes.h"
+#include "ResourceLocation.h"
 using namespace std;
 
 class GrassTile;
@@ -570,6 +571,24 @@ private:
 
 protected:
 	Icon *icon;
+
+protected:
+    // Optional individual texture support
+    ResourceLocation *resourceLocation;
+
+public:
+    // Set an individual texture
+    Tile *setResourceLocation(ResourceLocation *resLoc)
+    {
+        this->resourceLocation = resLoc;
+        return this;
+    }
+
+    // Get the individual texture
+    ResourceLocation *getResourceLocation()
+    {
+        return resourceLocation;
+    }
 
 protected:
 	void _init(int id, Material *material, bool isSolidRender);
