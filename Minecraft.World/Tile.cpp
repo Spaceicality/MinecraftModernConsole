@@ -16,6 +16,7 @@
 #include "net.minecraft.world.h"
 #include "net.minecraft.h"
 #include "Tile.h"
+#include "ResourceLocation.h"
 
 wstring Tile::TILE_DESCRIPTION_PREFIX = L"Tile.";
 
