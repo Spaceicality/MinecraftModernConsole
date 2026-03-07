@@ -2,6 +2,7 @@
 #include "Textures.h"
 
 typedef arrayWithLength<_TEXTURE_NAME> textureNameArray;
+
 class ResourceLocation
 {
 private:
@@ -23,9 +24,14 @@ public:
 		m_preloaded = true;
 	}
 
-	ResourceLocation(wstring path)
+	ResourceLocation(const wstring& path)
 	{
 		m_path = path;
+		// Automatically append .png if missing
+		if (m_path.length() < 4 || m_path.substr(m_path.length() - 4, 4) != L".png")
+		{
+			m_path += L".png";
+		}
 		m_preloaded = false;
 	}
 
@@ -59,13 +65,19 @@ public:
 		return m_texture.length;
 	}
 
-	wstring getPath()
+	wstring getPath() const
 	{
 		return m_path;
 	}
 
-	bool isPreloaded()
+	bool isPreloaded() const
 	{
 		return m_preloaded;
+	}
+
+	// Returns full path for loading from folder
+	wstring getFullPath() const
+	{
+		return m_path;
 	}
 };
